@@ -15,9 +15,12 @@
     "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
+    "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
     "@types/uuid": "^10.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
     "uuid": "^11.1.0",
     "zustand": "^5.0.5"
   },
