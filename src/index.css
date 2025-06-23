@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@source "../node_modules/flowbite-datepicker";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

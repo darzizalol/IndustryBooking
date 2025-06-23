@@ -5,9 +5,21 @@ import interactionPlugin from '@fullcalendar/interaction';
 import type { DateSelectArg, EventClickArg, EventDropArg } from '@fullcalendar/core';
 import { useCalendarStore } from './CalendarStore';
 import { v4 as uuidv4 } from 'uuid';
+import FormTemplate from './FormTemplate';
 
-export default function Calendar() {
+export default function Calendar(): React.ReactElement | null {
   const { events, addEvent, updateEvent, removeEvent } = useCalendarStore();
+
+  const handleAddEvent = (formData: any) => { 
+    const newEvent = {
+      id: uuidv4(),
+      title: formData.title,
+      start: formData.start,
+      end: formData.end,
+      allDay: formData.allDay,
+    };
+    addEvent(newEvent);
+  };
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     const title = prompt('Enter event title');
@@ -45,11 +57,14 @@ export default function Calendar() {
   };
 
   return (
+    
     <div className="h-full w-full bg-white p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Calendar</h1>
         <p className="text-gray-600">Manage your events and appointments</p>
       </div>
+      
+      <FormTemplate industry="Salon" onSave={handleAddEvent}/>
       
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
         <FullCalendar
