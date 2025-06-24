@@ -5,38 +5,62 @@ import interactionPlugin from '@fullcalendar/interaction';
 import type { DateSelectArg, EventClickArg, EventDropArg } from '@fullcalendar/core';
 import { useCalendarStore } from './CalendarStore';
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
 import FormTemplate from './FormTemplate';
+import type { BookingTemplate } from '../types';
+import ApproveTable from "../components/ApproveTable";
 
-export default function Calendar(): React.ReactElement | null {
+interface CalendarProps {
+  enabled: boolean,
+}
+
+export default function Calendar({ enabled }: CalendarProps): React.ReactElement | null {
   const { events, addEvent, updateEvent, removeEvent } = useCalendarStore();
 
-  const handleAddEvent = (formData: any) => { 
-    const newEvent = {
-      id: uuidv4(),
-      title: formData.title,
-      start: formData.start,
-      end: formData.end,
-      allDay: formData.allDay,
-    };
-    addEvent(newEvent);
-  };
+  const [bookingTemplate, setBookingTemplate] = useState<React.ReactElement>(<></>);
+  const [selectedDate, setSelectedDate] = useState<string>('');
+
+  // Default booking used for testing
+  const exampleBooking = {
+    id: "1",
+    firstName: "zhenghao",
+    lastName: "fang",
+    type: "salon",
+    email: "abc@gmail.com",
+    bookingDate: "2025-06-27",
+    bookingTime: "15:30",
+  }
+
+  const [listOfBookings, setListOfBookings] = useState<BookingTemplate[]>([exampleBooking]);
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
-    const title = prompt('Enter event title');
-    const calendarApi = selectInfo.view.calendar;
+    if (!enabled) {
+      alert('Scroll to the bottom to fill up booking details');
+      setSelectedDate(selectInfo.startStr);
+      setBookingTemplate(<FormTemplate
+        setBookingTemplate={setBookingTemplate}
+        setListOfBookings={setListOfBookings}
+        selectedDate={selectInfo.startStr}
+      />);
 
-    calendarApi.unselect(); 
-
-    if (title) {
-      const newEvent = {
-        id: uuidv4(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      };
-      addEvent(newEvent);
+      const calendarApi = selectInfo.view.calendar;
+      calendarApi.unselect();
     }
+  };
+
+  const handleFormSubmit = (formData: BookingTemplate) => {
+    const newEvent = {
+      id: uuidv4(),
+      title: formData.firstName + " " + formData.lastName + " " + formData.type + " booking",
+      start: formData.bookingDate + "T" + formData.bookingTime,
+      end: formData.bookingDate + "T" + formData.bookingTime,
+      allDay: false,
+    };
+    addEvent(newEvent);
+
+    // Clean up
+    setBookingTemplate(<></>);
+    setSelectedDate('');
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
@@ -57,15 +81,12 @@ export default function Calendar(): React.ReactElement | null {
   };
 
   return (
-    
-    <div className="h-full w-full bg-white p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Calendar</h1>
-        <p className="text-gray-600">Manage your events and appointments</p>
+        <p className="text-gray-600">Manage [Business] events and appointments</p>
       </div>
-      
-      <FormTemplate industry="Salon" onSave={handleAddEvent}/>
-      
+
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -122,6 +143,15 @@ export default function Calendar(): React.ReactElement | null {
           }}
         />
       </div>
+
+      <div>
+        {bookingTemplate}
+      </div>
+
+      <div>
+        {enabled ? <ApproveTable listOfBookings={listOfBookings} setListOfBookings={setListOfBookings} handleApprove={handleFormSubmit} /> : <></>}
+      </div>
     </div>
+
   );
 }
