@@ -1,29 +1,9 @@
-export interface FieldSpec {
-    id: string;
-    label: string;
-    type: 'text' | 'textarea' | 'number' | 'select' | 'multiselect' | 'date'
-    | 'time' | 'toggle';
-    options?: { value: string; label: string }[];
-    min?: number;
-    max?: number;
-    required?: boolean;
-}
-
 export interface BookingTemplate {
-    id: string; 
-    label: string; 
-    defaultColor: string; 
-    icon?: string; 
-    fields: FieldSpec[]; 
-    statusPreset?: {
-        pending: string; 
-        approved: string;
-        rejected: string;
-        cancelled: string;
-    };
-    recurrence?: {
-        allowed: boolean; 
-        defaultFreq?: 'DAILY' | 'WEEKLY' | 'MONTHLY';
-    };
-    resources?: string[]; 
+    id? : string,
+    firstName: string;
+    lastName: string;
+    type: string;
+    email: string;
+    bookingDate: string;
+    bookingTime: string;
 }
