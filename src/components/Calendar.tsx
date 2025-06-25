@@ -18,7 +18,6 @@ export default function Calendar({ enabled }: CalendarProps): React.ReactElement
   const { events, addEvent, updateEvent, removeEvent } = useCalendarStore();
 
   const [bookingTemplate, setBookingTemplate] = useState<React.ReactElement>(<></>);
-  const [selectedDate, setSelectedDate] = useState<string>('');
 
   // Default booking used for testing
   const exampleBooking = {
@@ -36,7 +35,6 @@ export default function Calendar({ enabled }: CalendarProps): React.ReactElement
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     if (!enabled) {
       alert('Scroll to the bottom to fill up booking details');
-      setSelectedDate(selectInfo.startStr);
       setBookingTemplate(<FormTemplate
         setBookingTemplate={setBookingTemplate}
         setListOfBookings={setListOfBookings}
@@ -60,7 +58,6 @@ export default function Calendar({ enabled }: CalendarProps): React.ReactElement
 
     // Clean up
     setBookingTemplate(<></>);
-    setSelectedDate('');
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
