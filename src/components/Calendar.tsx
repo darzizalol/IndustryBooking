@@ -81,7 +81,7 @@ export default function Calendar({ enabled }: CalendarProps): React.ReactElement
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6">
+    <div data-testid="inner-component" className="min-h-screen flex flex-col items-center justify-center bg-white p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Calendar</h1>
         <p className="text-gray-600">Manage [Business] events and appointments</p>
