@@ -6,6 +6,7 @@ A modern, responsive booking calendar application built with React, TypeScript, 
 ## Live Demo URL
 - https://industrybookingtemplate.netlify.app/
 - Deployed with **Netlify**
+- Demo video: https://drive.google.com/file/d/16KLPhbVdRGo0u1c0vL5xxFTr-q39qtRZ/view?usp=sharing
 
 ## 🚀 Core Features
 
