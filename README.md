@@ -86,6 +86,7 @@ npm run build        # Build for production
 npm run preview      # Preview production build
 npm run test         # Run test suite
 npm run lint         # Run ESLint
+
 ```
 
 ## 🧪 Testing & Quality Assurance
