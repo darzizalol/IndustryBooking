@@ -3,6 +3,10 @@
 Created and inspired from a take-home assessment:
 A modern, responsive booking calendar application built with React, TypeScript, and Tailwind CSS. Designed to serve both businesses and customers with a unified, role-gated interface.
 
+## Live Demo URL
+- https://industrybookingtemplate.netlify.app/
+- Deployed with **Netlify**
+
 ## 🚀 Core Features
 
 ### 1. Core Calendar Shell
